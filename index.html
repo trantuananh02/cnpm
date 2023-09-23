@@ -1,29 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form đăng nhập</title>
-</head>
-<body>
-    <div id="wrapper">
-        <form action="" id="form-login">
-            <h1 class="form-heading">Form đăng nhập</h1>
-            <div class="form-group">
-                <i class="far fa-user"></i>
-                <input type="text" class="form-input" placeholder="Tên đăng nhập">
-            </div>
-            <div class="form-group">
-                <i class="fas fa-key"></i>
-                <input type="password" class="form-input" placeholder="Mật khẩu">
-                <div id="eye">
-                    <i class="far fa-eye"></i>
-                </div>
-            </div>
-            <input type="submit" value="Đăng nhập" class="form-submit">
-        </form>
+<html>
+  <head>
+    <title>Lop CNPM</title>
+    <link rel="stylesheet" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <div id="home">
+      <div id="login-form">
+        <div class="login-form-header">
+          <span class="title-header">Đăng nhập</span>
+          <span style="position: absolute; top: 19px; right: 19px">X</span>
+        </div>
+        <div id="login-body">
+          <div class="label-input">Tên đăng nhập</div>
+          <input type="text" />
+          <div
+            style="
+              margin-top: 40px;
+              display: flex;
+              justify-content: space-between;
+              width: 462px;
+            "
+          >
+            <span class="label-input">Mật khẩu</span
+            ><span
+              ><a href="google.com" id="forgot-password"
+                >Quên mật khẩu?</a
+              ></span
+            >
+          </div>
+          <input type="password" />
+          <div class="login-button">Đăng nhập</div>
+          <p class="login-with">hoặc đăng nhập bằng</p>
+          <div
+            style="
+              display: flex;
+              justify-content: space-around;
+              padding-top: 10px;
+            "
+          >
+            <span class="otherway"
+              ><i
+                class="fa fa-brands fa-facebook"
+                style="font-size: 16px; padding-right: 5px"
+              ></i
+              >Facebook</span
+            >
+            <span class="otherway"
+              ><i
+                class="fa fa-brands fa-google"
+                style="font-size: 16px; padding-right: 5px"
+              ></i
+              >Google</span
+            >
+          </div>
+          <p class="footer">
+            Bạn chưa có tài khoản? <a href="google.com">Đăng ký ngay!</a>
+          </p>
+        </div>
+      </div>
     </div>
-    
-</body>
+  </body>
 </html>
+
