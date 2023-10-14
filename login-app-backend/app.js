@@ -15,7 +15,7 @@ var connection = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
   password: "my-secret-pw",
-  database: "public",
+  database: "PUBLIC",
 });
 
 connection.connect(function (err) {
@@ -30,7 +30,6 @@ connection.connect(function (err) {
 });
 
 // DEFINE API
-let userHocTran = { id: 1, username: "hoctran", password: "12345678" };
 //Login
 app.post("/login", (req, res) => {
   let resultSql;
@@ -56,12 +55,33 @@ app.post("/login", (req, res) => {
   }
 });
 //Dang ky
-app.post("/register", checkLogin, (req, res) => {
-  res.status(200).json({ text: "Day la PUT Request" });
+// app.post("/register", checkLogin, (req, res) => {
+//   let sqlUser = "INSERT INTO users (id, fullname, user_name, password, email) VALUES (?, ?, ?, ?, ?)"
+
+//   res.status(200).json({ text: "Day la PUT Request" });
+// });
+app.post("/register", (req, res) => {
+  if (req.body.fullname && req.body.username && req.body.password && req.body.email) {
+    let sqlUserInsert =
+      "INSERT INTO users (id, fullname, user_name, password, email) VALUES (?, ?, ?, ?, ?)";
+    connection.query(
+      sqlUserInsert,
+      [null, req.body.fullname, req.body.username, req.body.password, req.body.email],
+      function (err, result) {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ msg: "Đăng ký không thành công" });
+        }
+        return res.status(200).json({ msg: "Đăng ký thành công" });
+      }
+    );
+  } else {
+    return res.status(400).json({ msg: "Vui lòng cung cấp đầy đủ thông tin" });
+  }
 });
 //Get User By ID
 app.get("/user/:id", checkLogin, (req, res) => {
-  res.status(200).json({ text: "Xin chao Hoc Tran id cua ban la 1" });
+  res.status(200).json({ text: "Xin chao id cua ban la 1" });
 });
 
 function checkLogin(req, res, next) {
