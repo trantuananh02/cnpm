@@ -4,22 +4,56 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
 const cors = require("cors");
 app.use(cors());
 
+//CONNECT TO DATABASE MYSQL
 
+const mysql = require("mysql2");
+
+var connection = mysql.createConnection({
+  host: "127.0.0.1",
+  user: "root",
+  password: "my-secret-pw",
+  database: "public",
+});
+
+connection.connect(function (err) {
+  if (err) throw err;
+  let sql =
+    "CREATE TABLE IF NOT EXISTS users (id int NOT NULL UNIQUE AUTO_INCREMENT, fullname VARCHAR(255), user_name VARCHAR(255), password VARCHAR(255), email VARCHAR(255))";
+  connection.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table created");
+  });
+  console.log("Connected!");
+});
+
+// DEFINE API
 let userHocTran = { id: 1, username: "hoctran", password: "12345678" };
 //Login
 app.post("/login", (req, res) => {
-  if (
-    req.body.username === userHocTran.username &&
-    req.body.password === userHocTran.password
-  ) {
-    res.status(200).json({ msg: "Dang nhap thanh cong" });
-    return;
+  let resultSql;
+  if (req.body.username && req.body.password) {
+    let sqlUserSelect =
+      "SELECT * FROM users WHERE user_name = ? AND password = ?";
+    connection.query(
+      sqlUserSelect,
+      [req.body.username, req.body.password],
+      function (err, result) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        if (result && result.length < 1) {
+          res.status(400).json({ msg: "Dang nhap khong thanh cong" });
+          return;
+        }
+        res.status(200).json(result);
+        return;
+      }
+    );
   }
-  res.status(400).json({ msg: "khong dang nhap thanh cong" });
 });
 //Dang ky
 app.post("/register", checkLogin, (req, res) => {
